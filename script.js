@@ -1,4 +1,4 @@
-function getRandomInt() {
+function getComputerChoice() {
   // Generate a random integer between 0 and 2
   let choice = Math.floor(Math.random() * 3);
   console.log(choice);
