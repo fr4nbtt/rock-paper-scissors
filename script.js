@@ -1,92 +1,115 @@
-function playGame() {
-  // Variables to keep track of the players' scores
-  let humanScore = 0;
-  let computerScore = 0;
-  // Variable to keep track of the number of rounds played
-  let roundsPlayed = 0;
+// Select UI Buttons elements
+const rockButton = document.querySelector("#rock");
+const paperButton = document.querySelector("#paper");
+const scissorsButton = document.querySelector("#scissors");
+const startButton = document.querySelector("#start");
 
-  // Function to play a round
-  function playRound() {
-    // Display the current round number
-    console.log(`Round ${roundsPlayed + 1} of 5`);
+// Select Score span elements
 
-    const getComputerChoice = function () {
-      // Generate a random integer between 0 and 2
-      let choice = Math.floor(Math.random() * 3);
-      switch (choice) {
-        case 0:
-          return "rock";
-        case 1:
-          return "paper";
-        default:
-          return "scissors";
-      }
-    };
+let playerScoreElement = document.querySelector("#playerScore");
+let computerScoreElement = document.querySelector("#computerScore");
 
-    const getHumanChoice = function () {
-      let choice;
-      while (true) {
-        choice = prompt(
-          "Rock, Paper, Scissors. What's your choice?"
-        ).toLowerCase();
-        // Validate the input
-        if (choice === "rock" || choice === "paper" || choice === "scissors") {
-          return choice; // Return the valid choice
-        } else {
-          alert("Not a valid choice. Type again: rock, paper, or scissors."); // Alert for invalid input
-        }
-      }
-    };
+// Select Choices p element
 
-    const humanChoice = getHumanChoice();
-    const computerChoice = getComputerChoice();
+let choices = document.querySelector("#choices");
 
-    console.log("Your choice:", humanChoice);
-    console.log("Computer's choice:", computerChoice);
+// Select roundWinner p element
 
-    if (humanChoice === computerChoice) {
-      console.log(`We both chose ${humanChoice}. It's a DRAW!`);
-    } else if (
-      (humanChoice === "rock" && computerChoice === "scissors") ||
-      (humanChoice === "paper" && computerChoice === "rock") ||
-      (humanChoice === "scissors" && computerChoice === "paper")
-    ) {
-      console.log("You win!");
-      humanScore++;
-    } else {
-      console.log("Computer Wins!");
-      computerScore++;
+let roundWinner = document.querySelector("#roundWinner");
+
+// Select gameWinner p element
+
+let gameWinner = document.querySelector("#gameWinner");
+
+// Trackers
+let humanScore = 0;
+let computerScore = 0;
+
+// Add event listeners
+rockButton.addEventListener("click", function () {
+  playRound("rock");
+});
+paperButton.addEventListener("click", function () {
+  playRound("paper");
+});
+scissorsButton.addEventListener("click", function () {
+  playRound("scissors");
+});
+
+startButton.addEventListener("click", function () {
+  startGame();
+});
+
+// Function to play a round
+
+function playRound(playerSelection) {
+  const getComputerChoice = function () {
+    // Generate a random integer between 0 and 2
+    let choice = Math.floor(Math.random() * 3);
+    switch (choice) {
+      case 0:
+        return "rock";
+      case 1:
+        return "paper";
+      default:
+        return "scissors";
     }
+  };
 
-    console.log("Your score: " + humanScore);
-    console.log("Computer's score: " + computerScore);
-  }
+  const computerChoice = getComputerChoice();
 
-  // Loop until one of the players reaches 3 points or 5 rounds are played
-  while (humanScore < 3 && computerScore < 3 && roundsPlayed < 5) {
-    playRound();
-    roundsPlayed++;
-  }
+  choices.textContent = `You pick ${playerSelection} | Computer picks ${computerChoice}`;
 
-  console.log("Game is Over!");
-  console.log(
-    "Final score - Your score: " +
-      humanScore +
-      ", Computer's score: " +
-      computerScore
-  );
-
-  // Declare the winner
-  if (humanScore > computerScore) {
-    console.log("Congratulations! You Win!");
-  } else if (computerScore > humanScore) {
-    console.log("Computer Wins!");
+  if (playerSelection === computerChoice) {
+    roundWinner.textContent = `We both picked ${playerSelection}. It's a DRAW!`;
+  } else if (
+    (playerSelection === "rock" && computerChoice === "scissors") ||
+    (playerSelection === "paper" && computerChoice === "rock") ||
+    (playerSelection === "scissors" && computerChoice === "paper")
+  ) {
+    roundWinner.textContent = "You win this round!";
+    humanScore++;
   } else {
-    console.log("The game ended in a draw after 5 rounds.");
+    roundWinner.textContent = "Computer wins this round!";
+    computerScore++;
+  }
+
+  playerScoreElement.textContent = humanScore;
+  computerScoreElement.textContent = computerScore;
+
+  checkGameWinner();
+}
+
+// Function to check if there's a game winner
+
+function checkGameWinner() {
+  if (humanScore >= 5) {
+    gameWinner.textContent = "You are the winner!";
+    disableButtons();
+  } else if (computerScore >= 5) {
+    gameWinner.textContent = "Computer wins the game!";
+    disableButtons();
   }
 }
 
-// Call the function to start the game
-playGame();
+// Function to disable buttons after game ends
+function disableButtons() {
+  rockButton.disabled = true;
+  paperButton.disabled = true;
+  scissorsButton.disabled = true;
+}
 
-// Test edit
+// Function to start a new game
+
+function startGame() {
+  humanScore = 0;
+  computerScore = 0;
+  playerScoreElement.textContent = humanScore;
+  computerScoreElement.textContent = computerScore;
+  gameWinner.textContent = "";
+  roundWinner.textContent = "";
+  choices.textContent = "";
+  rockButton.disabled = false;
+  paperButton.disabled = false;
+  scissorsButton.disabled = false;
+}

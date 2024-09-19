@@ -3,10 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
     <title>Rock Paper Scissors</title>
   </head>
   <body>
-    <h1>Rock Paper Scissors</h1>
+    <div class="container">
+      <h1>Rock Paper Scissors</h1>
+      <div class="buttons-container">
+        <button class="btn" id="rock">
+          <i class="fa-regular fa-hand-back-fist fa-3x"></i>
+        </button>
+        <button class="btn" id="paper">
+          <i class="fa-regular fa-hand fa-3x"></i>
+        </button>
+        <button class="btn" id="scissors">
+          <i class="fa-regular fa-hand-scissors fa-3x"></i>
+        </button>
+      </div>
+      <div class="main-container">
+        <p id="choices"></p>
+        <p id="roundWinner"></p>
+        <h2>Current Score</h2>
+        <p>
+          Player: <span id="playerScore">0</span> | Computer:
+          <span id="computerScore">0</span>
+        </p>
+        <p id="gameWinner"></p>
+        <button class="btn" id="start">
+          <i class="fa-solid fa-arrow-rotate-left fa-2x"></i>
+        </button>
+      </div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
